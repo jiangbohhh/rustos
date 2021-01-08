@@ -16,4 +16,4 @@ panic = "abort" # 禁用panic时栈展开
 
 
 [dependencies]
-
+riscv = { git = "https://github.com/rcore-os/riscv" }
