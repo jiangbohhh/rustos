@@ -1,12 +1,7 @@
-//! # 全局属性
-//! - `#![no_std]`
-//! 禁用标准库
 #![no_std]
-
-//!
-//! - `#![no_main]`
-//! 不使用`main`函数等全部 Rust-level 入口点作为程序入口
 #![no_main]
+#![feature(global_asm)]
+#![feature(asm)]
 
 use core::panic::PanicInfo;
 
@@ -16,12 +11,34 @@ fn panic(_info: &PanicInfo) -> ! {
     loop {}
 }
 
-// 覆盖 crt_0 中的 _start 函数
-#[no_mangle] // 不重整函数名
-pub extern "C" fn _start() -> ! {
-    // 编译器会寻找一个名为`_start`的函数， 所以这个函数就是入口点
-    // 默认命名为`_start`
-    loop {}
+#[no_mangle]
+extern "C" fn abort() -> ! {
+    panic!("abort!");
 }
 
+global_asm!(include_str!("boot/entry64.asm"));
 
+// 在屏幕上输出一个字符，目前我们先不用了解其实现原理
+pub fn console_putchar(ch: u8) {
+    let ret: usize;
+    let arg0: usize = ch as usize;
+    let arg1: usize = 0;
+    let arg2: usize = 0;
+    let which: usize = 1;
+    unsafe {
+        asm!("ecall"
+             : "={x10}" (ret)
+             : "{x10}" (arg0), "{x11}" (arg1), "{x12}" (arg2), "{x17}" (which)
+             : "memory"
+             : "volatile"
+        );
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn rust_main() -> ! {
+    console_putchar(b'O');
+    console_putchar(b'K');
+    console_putchar(b'\n');
+    loop {}
+}
