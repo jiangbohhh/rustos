@@ -23,14 +23,12 @@ pub fn console_getchar() -> usize {
 }
 
 pub fn set_timer(stime_value: u64) {
-    #[cfg(target_pointer_width= "32")]
     sbi_call(
         SBI_SET_TIMER,
         stime_value as usize,
         (stime_value >> 32) as usize,
         0,
     );
-    #[cfg(target_point_width = "32")]
     sbi_call(SBI_SET_TIMER, stime_value as usize, 0, 0);
 }
 
