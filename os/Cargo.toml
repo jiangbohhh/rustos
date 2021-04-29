@@ -1,19 +1,9 @@
 [package]
 name = "os"
 version = "0.1.0"
-authors = ["JiangBo <jiangbo88999@gmail.com>"]
+authors = ["jiangbo <jiangbo88999@gmail.com>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-# `cargo build`编译时需要的配置
-[profile.dev]
-panic = "abort" # 禁用panic时栈展开
-
-# `cargo build --release`编译时需要的胚珠
-[profile.release]
-panic = "abort" # 禁用panic时栈展开
-
-
 
 [dependencies]
-riscv = { git = "https://github.com/rcore-os/riscv" }

@@ -1,5 +1,3 @@
-#![no_main]
-#![no_std]
-
-#[allow(unused_imports)]
-use os;
+fn main() {
+    println!("Hello, world!");
+}
