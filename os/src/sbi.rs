@@ -32,8 +32,7 @@ pub fn set_timer(stime_value: u64) {
     sbi_call(SBI_SET_TIMER, stime_value as usize, 0, 0);
 }
 
-
-const SBI_SET_TIMER:usize = 0;
+const SBI_SET_TIMER: usize = 0;
 const SBI_CONSOLE_PUTCHAR: usize = 1;
 const SBI_CONSOLE_GETCHAR: usize = 2;
 const SBI_CLEAR_IPI: usize = 3;
@@ -42,4 +41,3 @@ const SBI_REMOTE_SFENCE_I: usize = 5;
 const SBI_REMOTE_SFENCE_VMA: usize = 6;
 const SBI_REMOTE_SFENCE_VMA_ASID: usize = 7;
 const SBI_SHUTDOWN: usize = 8;
-
